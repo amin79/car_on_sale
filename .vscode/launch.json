@@ -5,21 +5,28 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "car_on_sale",
-      "request": "launch",
-      "type": "dart"
-    },
-    {
-      "name": "car_on_sale (profile mode)",
+      "name": "development Debug",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "profile"
+      "flutterMode": "debug",
+      "args": ["--flavor", "development"],
+      "program": "lib/main_development.dart"
     },
     {
-      "name": "car_on_sale (release mode)",
+      "name": "staging Debug",
       "request": "launch",
       "type": "dart",
-      "flutterMode": "release"
+      "flutterMode": "debug",
+      "args": ["--flavor", "staging"],
+      "program": "lib/main_staging.dart"
+    },
+    {
+      "name": "production Debug",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": ["--flavor", "production"],
+      "program": "lib/main_production.dart"
     }
   ]
 }
