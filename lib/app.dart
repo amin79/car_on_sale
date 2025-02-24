@@ -1,5 +1,6 @@
-import 'package:car_on_sale/features/home/home_screen.dart';
+import 'package:car_on_sale/routes/provider/route.provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -13,13 +14,13 @@ class App extends StatefulHookConsumerWidget {
 class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
+    final goRouter = ref.watch(goRouterProvider);
+
     return OverlaySupport.global(
-      child: MaterialApp(
-        title: 'Car On Sale',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen(),
+      child: MaterialApp.router(
+        title: 'CarOnSale',
+        routerConfig: goRouter,
+        builder: EasyLoading.init(),
       ),
     );
   }
