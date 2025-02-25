@@ -1,28 +1,44 @@
 import 'package:car_on_sale/core/either_type_defs.dart';
 import 'package:car_on_sale/domain/failure/failure.dart';
+import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:car_on_sale/domain/models/user.dart';
 import 'package:car_on_sale/features/auth/repositories/user_repository.dart';
 import 'package:fpdart/fpdart.dart';
+
 import 'package:hive/hive.dart';
 
-class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl({required Box<User> userBox}) : _userBox = userBox;
-  final Box<User> _userBox;
+part 'user_repository_impl.g.dart';
 
-  User? _currentUser;
+class UserRepositoryImpl implements UserRepository {
+  UserRepositoryImpl() {
+    _init();
+  }
+
+  late Box<User> _userBox;
+
+  final ValueNotifier<User?> currentUserNotifier = ValueNotifier(null);
+
+  Future<void> _init() async {
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(UserAdapter());
+    }
+    _userBox = await Hive.openBox<User>('userBox');
+  }
 
   @override
-  User? get currentUser => _currentUser;
+  User? get currentUser => currentUserNotifier.value;
 
   @override
   FutureVoid signIn(User user) async {
     try {
       final userByEmail = getUserByEmail(user.email);
       if (userByEmail != null) {
-        _currentUser = userByEmail;
+        currentUserNotifier.value = userByEmail;
       } else {
         final addedUser = await saveUser(user);
-        _currentUser = addedUser;
+        currentUserNotifier.value = addedUser;
       }
       return right(null);
     } catch (e) {
@@ -35,8 +51,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final result =
           _userBox.values.where((user) => user.email == email).toList();
-      _currentUser = result.isNotEmpty ? result.first : null;
-      return _currentUser;
+      return result.isNotEmpty ? result.first : null;
     } catch (e) {
       return null;
     }
@@ -53,7 +68,22 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  signOut(String id) {
-    _currentUser = null;
+  FutureVoid signOut() async {
+    currentUserNotifier.value = null;
+    return right(null);
   }
 }
+
+@riverpod
+UserRepositoryImpl userRepository(Ref ref) {
+  return UserRepositoryImpl();
+}
+
+final currentUserNotifierProvider =
+    ChangeNotifierProvider<ValueNotifier<User?>>((ref) {
+  return ref.watch(userRepositoryProvider).currentUserNotifier;
+});
+
+final currentUserProvider = Provider<User?>((ref) {
+  return ref.watch(currentUserNotifierProvider).value;
+});
