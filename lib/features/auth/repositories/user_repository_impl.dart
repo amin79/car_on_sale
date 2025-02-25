@@ -25,6 +25,11 @@ class UserRepositoryImpl implements UserRepository {
       Hive.registerAdapter(UserAdapter());
     }
     _userBox = await Hive.openBox<User>('userBox');
+
+    // Load the persisted current user if available
+    if (_userBox.containsKey('currentUser')) {
+      currentUserNotifier.value = _userBox.get('currentUser');
+    }
   }
 
   @override
@@ -40,6 +45,9 @@ class UserRepositoryImpl implements UserRepository {
         final addedUser = await saveUser(user);
         currentUserNotifier.value = addedUser;
       }
+      // Persist the logged in user
+      await _userBox.put('currentUser', currentUserNotifier.value!);
+
       return right(null);
     } catch (e) {
       return left(SignInFailure());
@@ -70,6 +78,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   FutureVoid signOut() async {
     currentUserNotifier.value = null;
+    await _userBox.delete('currentUser');
     return right(null);
   }
 }
