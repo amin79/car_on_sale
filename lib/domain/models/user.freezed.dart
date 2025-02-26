@@ -21,7 +21,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   @HiveField(0)
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @HiveField(1)
   String get name => throw _privateConstructorUsedError;
   @HiveField(2)
@@ -42,7 +42,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) String? id,
       @HiveField(1) String name,
       @HiveField(2) String email});
 }
@@ -62,15 +62,15 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? email = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@HiveField(0) String id,
+      {@HiveField(0) String? id,
       @HiveField(1) String name,
       @HiveField(2) String email});
 }
@@ -108,15 +108,15 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? name = null,
     Object? email = null,
   }) {
     return _then(_$UserImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -133,7 +133,7 @@ class __$$UserImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserImpl extends _User {
   const _$UserImpl(
-      {@HiveField(0) required this.id,
+      {@HiveField(0) this.id,
       @HiveField(1) required this.name,
       @HiveField(2) required this.email})
       : super._();
@@ -143,7 +143,7 @@ class _$UserImpl extends _User {
 
   @override
   @HiveField(0)
-  final String id;
+  final String? id;
   @override
   @HiveField(1)
   final String name;
@@ -188,7 +188,7 @@ class _$UserImpl extends _User {
 
 abstract class _User extends User {
   const factory _User(
-      {@HiveField(0) required final String id,
+      {@HiveField(0) final String? id,
       @HiveField(1) required final String name,
       @HiveField(2) required final String email}) = _$UserImpl;
   const _User._() : super._();
@@ -197,7 +197,7 @@ abstract class _User extends User {
 
   @override
   @HiveField(0)
-  String get id;
+  String? get id;
   @override
   @HiveField(1)
   String get name;

@@ -1,3 +1,4 @@
+import 'package:car_on_sale/config/theme_settings.dart';
 import 'package:car_on_sale/routes/provider/route.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -21,6 +22,8 @@ class _AppState extends ConsumerState<App> with WidgetsBindingObserver {
         title: 'CarOnSale',
         routerConfig: goRouter,
         builder: EasyLoading.init(),
+        theme: themeSettingsLight(context),
+        darkTheme: themeSettingsDark(context),
       ),
     );
   }

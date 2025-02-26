@@ -42,7 +42,8 @@ class UserRepositoryImpl implements UserRepository {
       if (userByEmail != null) {
         currentUserNotifier.value = userByEmail;
       } else {
-        final addedUser = await saveUser(user);
+        final userWithId = user.withGeneratedId();
+        final addedUser = await saveUser(userWithId);
         currentUserNotifier.value = addedUser;
       }
       // Persist the logged in user
