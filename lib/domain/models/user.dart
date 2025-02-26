@@ -14,13 +14,12 @@ class User with _$User {
 
   const factory User({
     @HiveField(0) String? id,
-    @HiveField(1) required String name,
-    @HiveField(2) required String email,
+    @HiveField(1) required String email,
+    @HiveField(2) String? password,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json['id'] as String,
-        name: json['name'] as String,
         email: json['email'] as String,
       );
 

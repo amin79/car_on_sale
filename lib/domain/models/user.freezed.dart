@@ -23,9 +23,9 @@ mixin _$User {
   @HiveField(0)
   String? get id => throw _privateConstructorUsedError;
   @HiveField(1)
-  String get name => throw _privateConstructorUsedError;
-  @HiveField(2)
   String get email => throw _privateConstructorUsedError;
+  @HiveField(2)
+  String? get password => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) String? id,
-      @HiveField(1) String name,
-      @HiveField(2) String email});
+      @HiveField(1) String email,
+      @HiveField(2) String? password});
 }
 
 /// @nodoc
@@ -63,22 +63,22 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = null,
     Object? email = null,
+    Object? password = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      password: freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -92,8 +92,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) String? id,
-      @HiveField(1) String name,
-      @HiveField(2) String email});
+      @HiveField(1) String email,
+      @HiveField(2) String? password});
 }
 
 /// @nodoc
@@ -109,22 +109,22 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = null,
     Object? email = null,
+    Object? password = freezed,
   }) {
     return _then(_$UserImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String,
+      password: freezed == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -134,8 +134,8 @@ class __$$UserImplCopyWithImpl<$Res>
 class _$UserImpl extends _User {
   const _$UserImpl(
       {@HiveField(0) this.id,
-      @HiveField(1) required this.name,
-      @HiveField(2) required this.email})
+      @HiveField(1) required this.email,
+      @HiveField(2) this.password})
       : super._();
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -146,14 +146,14 @@ class _$UserImpl extends _User {
   final String? id;
   @override
   @HiveField(1)
-  final String name;
+  final String email;
   @override
   @HiveField(2)
-  final String email;
+  final String? password;
 
   @override
   String toString() {
-    return 'User(id: $id, name: $name, email: $email)';
+    return 'User(id: $id, email: $email, password: $password)';
   }
 
   @override
@@ -162,13 +162,14 @@ class _$UserImpl extends _User {
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email);
+  int get hashCode => Object.hash(runtimeType, id, email, password);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -189,8 +190,8 @@ class _$UserImpl extends _User {
 abstract class _User extends User {
   const factory _User(
       {@HiveField(0) final String? id,
-      @HiveField(1) required final String name,
-      @HiveField(2) required final String email}) = _$UserImpl;
+      @HiveField(1) required final String email,
+      @HiveField(2) final String? password}) = _$UserImpl;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -200,10 +201,10 @@ abstract class _User extends User {
   String? get id;
   @override
   @HiveField(1)
-  String get name;
+  String get email;
   @override
   @HiveField(2)
-  String get email;
+  String? get password;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

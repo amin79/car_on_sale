@@ -1,9 +1,10 @@
+import 'package:car_on_sale/features/auth/repositories/user_repository.dart';
 import 'package:car_on_sale/features/auth/repositories/user_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class RouterRefreshNotifier extends ChangeNotifier {
-  final UserRepositoryImpl _userRepo;
+  final UserRepository _userRepo;
 
   RouterRefreshNotifier(Ref ref)
       : _userRepo = ref.read(userRepositoryProvider) {

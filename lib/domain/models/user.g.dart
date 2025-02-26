@@ -18,8 +18,8 @@ class UserAdapter extends TypeAdapter<User> {
     };
     return User(
       id: fields[0] as String?,
-      name: fields[1] as String,
-      email: fields[2] as String,
+      email: fields[1] as String,
+      password: fields[2] as String?,
     );
   }
 
@@ -30,9 +30,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name)
+      ..write(obj.email)
       ..writeByte(2)
-      ..write(obj.email);
+      ..write(obj.password);
   }
 
   @override
@@ -52,13 +52,13 @@ class UserAdapter extends TypeAdapter<User> {
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       id: json['id'] as String?,
-      name: json['name'] as String,
       email: json['email'] as String,
+      password: json['password'] as String?,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
       'email': instance.email,
+      'password': instance.password,
     };

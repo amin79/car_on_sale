@@ -18,6 +18,7 @@ class UserRepositoryImpl implements UserRepository {
 
   late Box<User> _userBox;
 
+  @override
   final ValueNotifier<User?> currentUserNotifier = ValueNotifier(null);
 
   Future<void> _init() async {
@@ -85,7 +86,7 @@ class UserRepositoryImpl implements UserRepository {
 }
 
 @riverpod
-UserRepositoryImpl userRepository(Ref ref) {
+UserRepository userRepository(Ref ref) {
   return UserRepositoryImpl();
 }
 
