@@ -16,7 +16,7 @@ class LoginScreen extends ConsumerWidget {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
 
-    void handleSigIn() {
+    void handleSignIn() {
       if (formKey.currentState!.validate()) {
         final user = User(
           email: emailController.text,
@@ -69,7 +69,7 @@ class LoginScreen extends ConsumerWidget {
                       ),
                       gapH24,
                       ElevatedButton(
-                        onPressed: handleSigIn,
+                        onPressed: handleSignIn,
                         child: const Text("Login"),
                       ),
                     ],

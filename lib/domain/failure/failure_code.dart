@@ -1,5 +1,1 @@
-enum FailureCode {
-  unknown,
-  authentication,
-  signInFailed,
-}
+enum FailureCode { unknown, authentication, network, server }

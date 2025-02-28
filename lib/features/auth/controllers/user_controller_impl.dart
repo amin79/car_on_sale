@@ -1,3 +1,4 @@
+import 'package:car_on_sale/domain/extensions/failure_translate.dart';
 import 'package:car_on_sale/domain/models/user.dart';
 import 'package:car_on_sale/features/auth/controllers/user_controller.dart';
 import 'package:car_on_sale/features/auth/repositories/user_repository.dart';
@@ -21,9 +22,11 @@ class UserControllerImpl implements UserController {
 
     result.fold(
       (failure) {
-        EasyLoading.showError('Sign in failed');
+        EasyLoading.showError(failure.translate);
       },
-      (success) {},
+      (success) {
+        EasyLoading.dismiss();
+      },
     );
   }
 
@@ -35,9 +38,11 @@ class UserControllerImpl implements UserController {
 
     result.fold(
       (failure) {
-        EasyLoading.showError('Something went wrong');
+        EasyLoading.showError(failure.translate);
       },
-      (success) {},
+      (success) {
+        EasyLoading.dismiss();
+      },
     );
   }
 }

@@ -44,15 +44,17 @@ class UserRepositoryImpl implements UserRepository {
         currentUserNotifier.value = userByEmail;
       } else {
         final userWithId = user.withGeneratedId();
-        final addedUser = await saveUser(userWithId);
-        currentUserNotifier.value = addedUser;
+        final result = await saveUser(userWithId);
+        result.fold((_) => null, (addedUser) {
+          currentUserNotifier.value = addedUser;
+        });
       }
       // Persist the logged in user
       await _userBox.put('currentUser', currentUserNotifier.value!);
 
       return right(null);
     } catch (e) {
-      return left(SignInFailure());
+      return left(AuthFailure());
     }
   }
 
@@ -68,12 +70,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<User?> saveUser(User user) async {
+  FutureEither<User?> saveUser(User user) async {
     try {
       await _userBox.put(user.id, user);
-      return user;
+      return right(user);
     } catch (e) {
-      return null;
+      return left(GeneralFailure());
     }
   }
 
