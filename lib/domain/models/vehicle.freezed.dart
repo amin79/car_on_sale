@@ -21,7 +21,8 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Vehicle {
   @HiveField(0)
-  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: intToString)
+  String? get id => throw _privateConstructorUsedError;
   @HiveField(1)
   DateTime? get valuatedAt => throw _privateConstructorUsedError;
   @HiveField(2)
@@ -72,7 +73,7 @@ abstract class $VehicleCopyWith<$Res> {
       _$VehicleCopyWithImpl<$Res, Vehicle>;
   @useResult
   $Res call(
-      {@HiveField(0) int? id,
+      {@HiveField(0) @JsonKey(fromJson: intToString) String? id,
       @HiveField(1) DateTime? valuatedAt,
       @HiveField(2) DateTime? requestedAt,
       @HiveField(3) DateTime? createdAt,
@@ -128,7 +129,7 @@ class _$VehicleCopyWithImpl<$Res, $Val extends Vehicle>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       valuatedAt: freezed == valuatedAt
           ? _value.valuatedAt
           : valuatedAt // ignore: cast_nullable_to_non_nullable
@@ -205,7 +206,7 @@ abstract class _$$VehicleImplCopyWith<$Res> implements $VehicleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@HiveField(0) int? id,
+      {@HiveField(0) @JsonKey(fromJson: intToString) String? id,
       @HiveField(1) DateTime? valuatedAt,
       @HiveField(2) DateTime? requestedAt,
       @HiveField(3) DateTime? createdAt,
@@ -259,7 +260,7 @@ class __$$VehicleImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       valuatedAt: freezed == valuatedAt
           ? _value.valuatedAt
           : valuatedAt // ignore: cast_nullable_to_non_nullable
@@ -330,9 +331,9 @@ class __$$VehicleImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$VehicleImpl implements _Vehicle {
+class _$VehicleImpl extends _Vehicle {
   const _$VehicleImpl(
-      {@HiveField(0) this.id,
+      {@HiveField(0) @JsonKey(fromJson: intToString) this.id,
       @HiveField(1) this.valuatedAt,
       @HiveField(2) this.requestedAt,
       @HiveField(3) this.createdAt,
@@ -348,14 +349,16 @@ class _$VehicleImpl implements _Vehicle {
       @HiveField(13) required this.model,
       @HiveField(14) required this.externalId,
       @HiveField(15) this.feedback,
-      @HiveField(16) this.isPositiveFeedback});
+      @HiveField(16) this.isPositiveFeedback})
+      : super._();
 
   factory _$VehicleImpl.fromJson(Map<String, dynamic> json) =>
       _$$VehicleImplFromJson(json);
 
   @override
   @HiveField(0)
-  final int? id;
+  @JsonKey(fromJson: intToString)
+  final String? id;
   @override
   @HiveField(1)
   final DateTime? valuatedAt;
@@ -487,9 +490,9 @@ class _$VehicleImpl implements _Vehicle {
   }
 }
 
-abstract class _Vehicle implements Vehicle {
+abstract class _Vehicle extends Vehicle {
   const factory _Vehicle(
-      {@HiveField(0) final int? id,
+      {@HiveField(0) @JsonKey(fromJson: intToString) final String? id,
       @HiveField(1) final DateTime? valuatedAt,
       @HiveField(2) final DateTime? requestedAt,
       @HiveField(3) final DateTime? createdAt,
@@ -508,12 +511,14 @@ abstract class _Vehicle implements Vehicle {
       @HiveField(14) required final String externalId,
       @HiveField(15) final String? feedback,
       @HiveField(16) final bool? isPositiveFeedback}) = _$VehicleImpl;
+  const _Vehicle._() : super._();
 
   factory _Vehicle.fromJson(Map<String, dynamic> json) = _$VehicleImpl.fromJson;
 
   @override
   @HiveField(0)
-  int? get id;
+  @JsonKey(fromJson: intToString)
+  String? get id;
   @override
   @HiveField(1)
   DateTime? get valuatedAt;

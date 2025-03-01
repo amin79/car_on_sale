@@ -17,7 +17,7 @@ class VehicleAdapter extends TypeAdapter<Vehicle> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Vehicle(
-      id: fields[0] as int?,
+      id: fields[0] as String?,
       valuatedAt: fields[1] as DateTime?,
       requestedAt: fields[2] as DateTime?,
       createdAt: fields[3] as DateTime?,
@@ -94,7 +94,7 @@ class VehicleAdapter extends TypeAdapter<Vehicle> {
 
 _$VehicleImpl _$$VehicleImplFromJson(Map<String, dynamic> json) =>
     _$VehicleImpl(
-      id: (json['id'] as num?)?.toInt(),
+      id: intToString(json['id']),
       valuatedAt: json['valuatedAt'] == null
           ? null
           : DateTime.parse(json['valuatedAt'] as String),

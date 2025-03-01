@@ -14,14 +14,12 @@ class VehicleListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: vehicleList.length,
-        itemBuilder: (context, index) {
-          final vinData = vehicleList[index];
-          return VehicleTile(vinData: vinData, addOnSelect: addOnSelect);
-        },
-      ),
+    return ListView.builder(
+      itemCount: vehicleList.length,
+      itemBuilder: (context, index) {
+        final vinData = vehicleList[index];
+        return VehicleTile(vinData: vinData, addOnSelect: addOnSelect);
+      },
     );
   }
 }

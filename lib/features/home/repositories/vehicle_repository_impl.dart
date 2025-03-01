@@ -86,11 +86,14 @@ class VehicleRepositoryImpl implements VehicleRepository {
   }
 
   @override
-  FutureEither<Vehicle> saveVehicle(Vehicle vinData) async {
+  FutureEither<Vehicle> saveVehicle(Vehicle vehicle) async {
     try {
-      await _vehicleDataBox.put(vinData.id, vinData);
+      if (vehicle.id == null || vehicle.id!.isEmpty) {
+        vehicle = vehicle.withGeneratedId();
+      }
+      await _vehicleDataBox.put(vehicle.id, vehicle);
       getVehicleList();
-      return right(vinData);
+      return right(vehicle);
     } catch (e) {
       return left(GeneralFailure(error: e.toString()));
     }

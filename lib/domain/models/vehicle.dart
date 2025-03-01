@@ -1,14 +1,26 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
 
 part 'vehicle.freezed.dart';
 part 'vehicle.g.dart';
 
+String intToString(dynamic value) {
+  if (value is int) {
+    return value.toString();
+  }
+  return value ?? '';
+}
+
 @freezed
 @HiveType(typeId: 1)
 class Vehicle with _$Vehicle {
+  const Vehicle._();
+
+  static const Uuid _uuid = Uuid();
+
   const factory Vehicle({
-    @HiveField(0) int? id,
+    @HiveField(0) @JsonKey(fromJson: intToString) String? id,
     @HiveField(1) DateTime? valuatedAt,
     @HiveField(2) DateTime? requestedAt,
     @HiveField(3) DateTime? createdAt,
@@ -29,4 +41,8 @@ class Vehicle with _$Vehicle {
 
   factory Vehicle.fromJson(Map<String, dynamic> json) =>
       _$VehicleFromJson(json);
+
+  Vehicle withGeneratedId() {
+    return copyWith(id: _uuid.v4());
+  }
 }

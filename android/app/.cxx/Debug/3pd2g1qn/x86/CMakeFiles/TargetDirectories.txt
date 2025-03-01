@@ -1,0 +1,2 @@
+/Users/aminseraji/Documents/Projects/car_on_sale/android/app/.cxx/Debug/3pd2g1qn/x86/CMakeFiles/edit_cache.dir
+/Users/aminseraji/Documents/Projects/car_on_sale/android/app/.cxx/Debug/3pd2g1qn/x86/CMakeFiles/rebuild_cache.dir

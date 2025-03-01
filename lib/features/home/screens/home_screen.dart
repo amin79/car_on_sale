@@ -82,7 +82,9 @@ class HomeScreen extends HookConsumerWidget {
                   if (cachedVehicleDataList.isNotEmpty) ...[
                     const TextTitleLarge(text: "Previous Searches"),
                     gapH16,
-                    VehicleListWidget(vehicleList: cachedVehicleDataList),
+                    Expanded(
+                        child: VehicleListWidget(
+                            vehicleList: cachedVehicleDataList)),
                   ] else ...[
                     const TextTitleLarge(text: "No Previous Searches"),
                     const Expanded(
