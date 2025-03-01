@@ -6,9 +6,11 @@ class VehicleListWidget extends StatelessWidget {
   const VehicleListWidget({
     super.key,
     required this.vehicleList,
+    this.addOnSelect = false,
   });
 
   final List<Vehicle> vehicleList;
+  final bool addOnSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class VehicleListWidget extends StatelessWidget {
         itemCount: vehicleList.length,
         itemBuilder: (context, index) {
           final vinData = vehicleList[index];
-          return VehicleTile(vinData: vinData);
+          return VehicleTile(vinData: vinData, addOnSelect: addOnSelect);
         },
       ),
     );

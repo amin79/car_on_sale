@@ -7,9 +7,11 @@ class SearchResultList extends StatelessWidget {
   const SearchResultList({
     super.key,
     required this.searchResult,
+    this.addOnSelect = false,
   });
 
   final ValueNotifier<List<Vehicle>> searchResult;
+  final bool addOnSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class SearchResultList extends StatelessWidget {
               padding: const EdgeInsets.all(Sizes.p10),
               child: VehicleListWidget(
                 vehicleList: searchResult.value,
+                addOnSelect: addOnSelect,
               ),
             ),
           ),

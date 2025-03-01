@@ -1,5 +1,6 @@
 import 'package:car_on_sale/config/app_sizes.dart';
 import 'package:car_on_sale/domain/models/vehicle.dart';
+import 'package:car_on_sale/features/home/controllers/vehicle_controller_impl.dart';
 import 'package:car_on_sale/routes/provider/route.provider.dart';
 import 'package:car_on_sale/routes/route_names.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,19 @@ class VehicleTile extends ConsumerWidget {
   const VehicleTile({
     super.key,
     required this.vinData,
+    this.addOnSelect = false,
   });
 
   final Vehicle vinData;
+  final bool addOnSelect;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
+        if (addOnSelect) {
+          ref.read(vehicleControllerProvider).saveVehicle(vinData);
+        }
         ref
             .read(goRouterProvider)
             .pushNamed(RouteNames.vehicleDetails.name, extra: vinData);

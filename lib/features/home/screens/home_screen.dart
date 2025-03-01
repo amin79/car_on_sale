@@ -29,7 +29,7 @@ class HomeScreen extends HookConsumerWidget {
     Future<void> handleSearch() async {
       searchResult.value = [];
       final result = await ref
-          .read(vinControllerProvider)
+          .read(vehicleControllerProvider)
           .fetchAuctionData(vehicleTextController.text);
       result.fold(
         (_) {},
@@ -92,7 +92,7 @@ class HomeScreen extends HookConsumerWidget {
                 ],
               ),
               if (searchResult.value.isNotEmpty)
-                SearchResultList(searchResult: searchResult),
+                SearchResultList(searchResult: searchResult, addOnSelect: true),
             ],
           ),
         ),

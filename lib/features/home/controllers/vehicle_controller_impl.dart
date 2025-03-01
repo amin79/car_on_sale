@@ -45,7 +45,7 @@ class VehicleControllerImpl extends VehicleController {
 }
 
 @riverpod
-VehicleController vinController(Ref ref) {
-  final vinRepository = ref.read(vehicleRepositoryProvider);
-  return VehicleControllerImpl(vinRepository);
+VehicleController vehicleController(Ref ref) {
+  final vehicleRepository = ref.read(vehicleRepositoryProvider);
+  return VehicleControllerImpl(vehicleRepository);
 }
