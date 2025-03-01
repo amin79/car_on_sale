@@ -22,7 +22,8 @@ class UserControllerImpl implements UserController {
 
     result.fold(
       (failure) {
-        EasyLoading.showError(failure.translate);
+        EasyLoading.showError(failure.translate,
+            duration: const Duration(seconds: 10), dismissOnTap: true);
       },
       (success) {
         EasyLoading.dismiss();
@@ -38,7 +39,8 @@ class UserControllerImpl implements UserController {
 
     result.fold(
       (failure) {
-        EasyLoading.showError(failure.translate);
+        EasyLoading.showError(failure.translate,
+            duration: const Duration(seconds: 10), dismissOnTap: true);
       },
       (success) {
         EasyLoading.dismiss();

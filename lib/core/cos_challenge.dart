@@ -80,7 +80,7 @@ class CosChallenge {
     (request) async {
       if (request.headers[user]?.isEmpty ?? true) throw ClientException('Auth');
       final length = _ResponseCode.values.length;
-      const code = 3; //Random().nextInt(length + 1) + (length - 1);
+      final code = Random().nextInt(length + 1) + (length - 1);
       await Future<void>.delayed(const Duration(seconds: 1));
       if (code > length + 1) throw TimeoutException('Timed-out');
       final response = _ResponseCode.values.elementAt(code - (length - 1));

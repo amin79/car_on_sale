@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hive/hive.dart';
 
-part 'vin_data.freezed.dart';
-part 'vin_data.g.dart';
+part 'vehicle.freezed.dart';
+part 'vehicle.g.dart';
 
 @freezed
 @HiveType(typeId: 1)
-class VinData with _$VinData {
-  const factory VinData({
+class Vehicle with _$Vehicle {
+  const factory Vehicle({
     @HiveField(0) int? id,
     @HiveField(1) DateTime? valuatedAt,
     @HiveField(2) DateTime? requestedAt,
@@ -25,8 +25,8 @@ class VinData with _$VinData {
     @HiveField(14) required String externalId,
     @HiveField(15) String? feedback,
     @HiveField(16) bool? isPositiveFeedback,
-  }) = _VinData;
+  }) = _Vehicle;
 
-  factory VinData.fromJson(Map<String, dynamic> json) =>
-      _$VinDataFromJson(json);
+  factory Vehicle.fromJson(Map<String, dynamic> json) =>
+      _$VehicleFromJson(json);
 }

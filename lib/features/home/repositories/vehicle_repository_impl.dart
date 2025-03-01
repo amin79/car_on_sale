@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:car_on_sale/core/cos_challenge.dart';
-import 'package:car_on_sale/domain/models/vin_data.dart';
+import 'package:car_on_sale/domain/models/vehicle.dart';
 import 'package:car_on_sale/core/either_type_defs.dart';
 import 'package:car_on_sale/domain/failure/failure.dart';
 import 'package:car_on_sale/features/auth/repositories/user_repository_impl.dart';
-import 'package:car_on_sale/features/home/repositories/vin_repository.dart';
+import 'package:car_on_sale/features/home/repositories/vehicle_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:hive/hive.dart';
@@ -13,30 +13,35 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'vin_repository_impl.g.dart';
+part 'vehicle_repository_impl.g.dart';
 
-class VinRepositoryImpl implements VinRepository {
+class VehicleRepositoryImpl implements VehicleRepository {
   final Ref ref;
+  late Box<Vehicle> _vehicleDataBox;
+  @override
+  late ValueNotifier<List<Vehicle>> vehicleDataListNotifier;
 
-  VinRepositoryImpl(this.ref) {
+  VehicleRepositoryImpl(this.ref) {
     _init();
   }
-  late Box<VinData> _vinDataBox;
 
   Future<void> _init() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(VinDataAdapter());
+    vehicleDataListNotifier = ValueNotifier([]);
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(VehicleAdapter());
     }
-    _vinDataBox = await Hive.openBox<VinData>('vinDataBox');
-
-    getVinDataList();
+    _vehicleDataBox = await Hive.openBox<Vehicle>('vehicleDataBox');
+    Future.delayed(Duration.zero, () {
+      getVehicleList();
+    });
+    getVehicleList();
   }
 
   @override
-  ValueNotifier<List<VinData>> get vinDataListNotifier => ValueNotifier([]);
+  List<Vehicle> get vinList => vehicleDataListNotifier.value;
 
   @override
-  FutureEither<Either<VinData, List<VinData>>> fetchAuctionData(
+  FutureEither<Either<Vehicle, List<Vehicle>>> fetchAuctionData(
       String vin) async {
     try {
       final currentUser = ref.read(currentUserProvider);
@@ -53,21 +58,21 @@ class VinRepositoryImpl implements VinRepository {
 
       final data = jsonDecode(response.body.trim());
       if (response.statusCode == 200) {
-        final vinData = VinData.fromJson(data);
+        final vehicleData = Vehicle.fromJson(data);
 
         // Save the vinData to the local database
-        final result = await saveVinData(vinData);
+        final result = await saveVehicle(vehicleData);
         return result.fold((failure) {
           return left(failure);
-        }, (savedVin) {
-          return right(Left(savedVin));
+        }, (savedVehicle) {
+          return right(Left(savedVehicle));
         });
       }
 
       if (response.statusCode == 300) {
-        final multipleVins =
-            (data as List).map((e) => VinData.fromJson(e)).toList();
-        return right(Right(multipleVins));
+        final multipleVehicles =
+            (data as List).map((e) => Vehicle.fromJson(e)).toList();
+        return right(Right(multipleVehicles));
       }
 
       return left(ServerFailure(error: data['message']));
@@ -81,10 +86,10 @@ class VinRepositoryImpl implements VinRepository {
   }
 
   @override
-  FutureEither<VinData> saveVinData(VinData vinData) async {
+  FutureEither<Vehicle> saveVehicle(Vehicle vinData) async {
     try {
-      await _vinDataBox.put(vinData.id, vinData);
-      getVinDataList();
+      await _vehicleDataBox.put(vinData.id, vinData);
+      getVehicleList();
       return right(vinData);
     } catch (e) {
       return left(GeneralFailure(error: e.toString()));
@@ -93,25 +98,25 @@ class VinRepositoryImpl implements VinRepository {
 
   //get the list of VinData from the local database
   @override
-  void getVinDataList() {
+  void getVehicleList() {
     try {
-      vinDataListNotifier.value = _vinDataBox.values.toList();
+      vehicleDataListNotifier.value = _vehicleDataBox.values.toList();
     } catch (e) {
-      vinDataListNotifier.value = [];
+      vehicleDataListNotifier.value = [];
     }
   }
 }
 
 @riverpod
-VinRepository vinRepository(Ref ref) {
-  return VinRepositoryImpl(ref);
+VehicleRepository vehicleRepository(Ref ref) {
+  return VehicleRepositoryImpl(ref);
 }
 
-final vinDataListNotifierProvider =
-    ChangeNotifierProvider<ValueNotifier<List<VinData>>>((ref) {
-  return ref.watch(vinRepositoryProvider).vinDataListNotifier;
+final vehicleDataListNotifierProvider =
+    ChangeNotifierProvider<ValueNotifier<List<Vehicle>>>((ref) {
+  return ref.watch(vehicleRepositoryProvider).vehicleDataListNotifier;
 });
 
-final vinDataListProvider = Provider<List<VinData>>((ref) {
-  return ref.watch(vinDataListNotifierProvider).value;
+final vehicleDataListProvider = Provider<List<Vehicle>>((ref) {
+  return ref.watch(vehicleDataListNotifierProvider).value;
 });

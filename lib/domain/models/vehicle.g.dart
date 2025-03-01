@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'vin_data.dart';
+part of 'vehicle.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class VinDataAdapter extends TypeAdapter<VinData> {
+class VehicleAdapter extends TypeAdapter<Vehicle> {
   @override
   final int typeId = 1;
 
   @override
-  VinData read(BinaryReader reader) {
+  Vehicle read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return VinData(
+    return Vehicle(
       id: fields[0] as int?,
       valuatedAt: fields[1] as DateTime?,
       requestedAt: fields[2] as DateTime?,
@@ -38,7 +38,7 @@ class VinDataAdapter extends TypeAdapter<VinData> {
   }
 
   @override
-  void write(BinaryWriter writer, VinData obj) {
+  void write(BinaryWriter writer, Vehicle obj) {
     writer
       ..writeByte(17)
       ..writeByte(0)
@@ -83,7 +83,7 @@ class VinDataAdapter extends TypeAdapter<VinData> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VinDataAdapter &&
+      other is VehicleAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
@@ -92,8 +92,8 @@ class VinDataAdapter extends TypeAdapter<VinData> {
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$VinDataImpl _$$VinDataImplFromJson(Map<String, dynamic> json) =>
-    _$VinDataImpl(
+_$VehicleImpl _$$VehicleImplFromJson(Map<String, dynamic> json) =>
+    _$VehicleImpl(
       id: (json['id'] as num?)?.toInt(),
       valuatedAt: json['valuatedAt'] == null
           ? null
@@ -123,7 +123,7 @@ _$VinDataImpl _$$VinDataImplFromJson(Map<String, dynamic> json) =>
       isPositiveFeedback: json['isPositiveFeedback'] as bool?,
     );
 
-Map<String, dynamic> _$$VinDataImplToJson(_$VinDataImpl instance) =>
+Map<String, dynamic> _$$VehicleImplToJson(_$VehicleImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'valuatedAt': instance.valuatedAt?.toIso8601String(),
