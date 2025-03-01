@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:car_on_sale/app.dart';
 import 'package:car_on_sale/config/environment.dart';
 import 'package:car_on_sale/features/auth/repositories/user_repository_impl.dart';
-import 'package:car_on_sale/routes/provider/route.provider.dart';
-import 'package:car_on_sale/routes/provider/router_refresh_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
