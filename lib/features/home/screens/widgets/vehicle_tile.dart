@@ -1,8 +1,11 @@
 import 'package:car_on_sale/config/app_sizes.dart';
 import 'package:car_on_sale/domain/models/vehicle.dart';
+import 'package:car_on_sale/routes/provider/route.provider.dart';
+import 'package:car_on_sale/routes/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class VehicleTile extends StatelessWidget {
+class VehicleTile extends ConsumerWidget {
   const VehicleTile({
     super.key,
     required this.vinData,
@@ -11,10 +14,12 @@ class VehicleTile extends StatelessWidget {
   final Vehicle vinData;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        // navigate to details screen
+        ref
+            .read(goRouterProvider)
+            .pushNamed(RouteNames.vehicleDetails.name, extra: vinData);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: Sizes.p12),

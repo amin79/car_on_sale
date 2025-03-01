@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:car_on_sale/app.dart';
 import 'package:car_on_sale/config/environment.dart';
+import 'package:car_on_sale/features/auth/repositories/user_repository_impl.dart';
+import 'package:car_on_sale/routes/provider/route.provider.dart';
+import 'package:car_on_sale/routes/provider/router_refresh_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -31,12 +34,19 @@ Future<void> bootstrap({required Environment environment}) async {
 
   await Hive.initFlutter();
 
+  final container = ProviderContainer();
+  container.read(userRepositoryProvider);
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-
-  runApp(const ProviderScope(child: App()));
-
+  runApp(
+    UncontrolledProviderScope(
+      container: container,
+      child: const App(),
+    ),
+  );
+  await Future.delayed(const Duration(seconds: 2));
   FlutterNativeSplash.remove();
 }

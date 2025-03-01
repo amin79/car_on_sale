@@ -1,1 +1,1 @@
-enum RouteNames { home, login, settings }
+enum RouteNames { home, login, settings, vehicleDetails }
